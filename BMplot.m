@@ -1,12 +1,12 @@
-%Ä£ÄâBrownÔË¶¯µÄº¯ÊıµÄ¹ìµÀ£¬²¢Ä£ÄâÆä¾ùÖµµÄ¹ìµÀ
+%æ¨¡æ‹ŸBrownè¿åŠ¨çš„å‡½æ•°çš„è½¨é“ï¼Œå¹¶æ¨¡æ‹Ÿå…¶å‡å€¼çš„è½¨é“
 randn('state',100);  
 T = 1; N = 500; dt = T/N; t = dt:dt:1;
 
 M = 1000;   %M paths simultaneously
 dW = sqrt(dt)*randn(M,N);
-W = cumsum(dW,2);    %cumulative sums across the 2th dimension(¼´°´¾ØÕóµÄÁĞÀÛ¼ÓÇóºÍ)
+W = cumsum(dW,2);    %cumulative sums across the 2th dimension(å³æŒ‰çŸ©é˜µçš„åˆ—ç´¯åŠ æ±‚å’Œ)
 U = exp(repmat(t,[M,1])+0.5*W);  %repmat(t,[M,1]) produce an M*N array whose ith row are all copies of t
-Umean = mean(U);      %mean(U) ¶Ô¾ØÕóµÄÁĞÈ¡¾ùÖµ,¶ÔÏòÁ¿£¨ÎŞÂÛĞĞÁĞÏòÁ¿£©²Ù×÷Ò²ÊÇÈ¡¾ùÖµ
+Umean = mean(U);      %mean(U) å¯¹çŸ©é˜µçš„åˆ—å–å‡å€¼,å¯¹å‘é‡ï¼ˆæ— è®ºè¡Œåˆ—å‘é‡ï¼‰æ“ä½œä¹Ÿæ˜¯å–å‡å€¼
 plot([0,t],[1,Umean],'b-'); hold on;    %plot mean over M paths
 plot([0,t],[ones(5,1),U(1:5,:)],'r--'); hold off   %plot 5 individual paths
 xlabel('t','FontSize',12);
@@ -14,6 +14,6 @@ ylabel('U(t)','FontSize',12,'Rotation',0);
 legend('mean of 1000 paths','5 individual paths');
 averr = norm(Umean-exp(9*t/8),'inf')    %sample error
 
-%%%%±Ê¼Ç
-% repmat(U,2) ½«U×÷ÎªÔªËØ¿é¸´ÖÆ³É2*2µÄ¾ØÕó
-% repmat(U,2,3) or repmat(U,[2,3]) ½«U×÷Îª¿é¸´ÖÆ³É2*3¾ØÕó
+%%%%ç¬”è®°
+% repmat(U,2) å°†Uä½œä¸ºå…ƒç´ å—å¤åˆ¶æˆ2*2çš„çŸ©é˜µ
+% repmat(U,2,3) or repmat(U,[2,3]) å°†Uä½œä¸ºå—å¤åˆ¶æˆ2*3çŸ©é˜µ
