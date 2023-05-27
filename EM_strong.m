@@ -15,28 +15,28 @@ M = 1000;                     % number of paths sampled
 Xerr = zeros(M,5);            % each cloume of Xerr stores the errors of paths of EM Method on different timesteps
 
 %%%%%%--------------------------------%%%%%
-%%%% ÒÔÏÂÊÇ×Ô¼ºËùĞ´µÄ£¬¶ÔÎÄÏ×ÖĞµÄ´úÂë¸Ä½ø£¬ÏòÁ¿ÔËËã´úÌæÑ­»·¿ÉÒÔ¼Ó¿ìËÙ¶È %%%%
-dW = sqrt(dt)*randn(M,N);   % true solution and EM ÓÃÍ¬Ò»Brown paths
+%%%% ä»¥ä¸‹æ˜¯è‡ªå·±æ‰€å†™çš„ï¼Œå¯¹æ–‡çŒ®ä¸­çš„ä»£ç æ”¹è¿›ï¼Œå‘é‡è¿ç®—ä»£æ›¿å¾ªç¯å¯ä»¥åŠ å¿«é€Ÿåº¦ %%%%
+dW = sqrt(dt)*randn(M,N);   % true solution and EM ç”¨åŒä¸€Brown paths
 W = cumsum(dW,2);
 Xtrue = X0*exp((lambda-0.5*mu^2)+mu*W(:,end)); 
 for p = 1:5
     R = 2^(p-1); Dt = R*dt; L = N/R; 
-    Xtemp = repmat(X0,[M,1]);  %Ã¿¸öÑ­»·ĞèÖØĞÂ¸³³õÖµ£¬°´²»Í¬²½³¤ÖØĞÂ¼ÆËã£¨²»Ó¦¸Ã·ÅÔÚÍâÑ­»·Ö®Íâ£©
+    Xtemp = repmat(X0,[M,1]);  %æ¯ä¸ªå¾ªç¯éœ€é‡æ–°èµ‹åˆå€¼ï¼ŒæŒ‰ä¸åŒæ­¥é•¿é‡æ–°è®¡ç®—ï¼ˆä¸åº”è¯¥æ”¾åœ¨å¤–å¾ªç¯ä¹‹å¤–ï¼‰
     for j = 1:L
-        Winner = sum(dW(:,R*(j-1)+1:R*j),2);  % °´µÚ2¸öÎ¬¶ÈÇóºÍ£¬µÃµ½µÄÊÇÁĞÏòÁ¿
+        Winner = sum(dW(:,R*(j-1)+1:R*j),2);  % æŒ‰ç¬¬2ä¸ªç»´åº¦æ±‚å’Œï¼Œå¾—åˆ°çš„æ˜¯åˆ—å‘é‡
         Xtemp = Xtemp + Dt*lambda*Xtemp + mu*Xtemp.*Winner;  
     end
     Xerr(:,p) = abs(Xtemp - Xtrue);
 end  
 %%%%--------------------------------%%%%
 
-%%%% ÒÔÏÂ±»×¢ÊÍÆÁ±ÎµÄÊÇÂÛÎÄÖĞµÄ´úÂë£¬ÓĞÈı¸öÇ¶Ì×Ñ­»·£¬ÔËĞĞËÙ¶ÈÂıÓÚÉÏÃæµÄ´úÂë¡£
+%%%% ä»¥ä¸‹è¢«æ³¨é‡Šå±è”½çš„æ˜¯è®ºæ–‡ä¸­çš„ä»£ç ï¼Œæœ‰ä¸‰ä¸ªåµŒå¥—å¾ªç¯ï¼Œè¿è¡Œé€Ÿåº¦æ…¢äºä¸Šé¢çš„ä»£ç ã€‚
 % for s = 1:M                   % the number of sample paths
 %     dW = sqrt(dt)*randn(1,N);
 %     W = cumsum(dW);
 %     Xtrue = X0*exp((lambda-0.5*mu^2)+mu*W(end));   % the exact solution at t = 1
 %     for p = 1:5
-%         R = 2^(p-1); Dt = R*dt; L = N/R;      % È¡²»Í¬²½³¤¼ÆËãÔÚt = 1´¦EMµÄ½â£¨Òª»­³öError-DtµÄÍ¼Ïñ£¬ËùÒÔĞèÒªÑ¡È¡²»Í¬µÄ²½³¤¼ÆËã£©
+%         R = 2^(p-1); Dt = R*dt; L = N/R;      % å–ä¸åŒæ­¥é•¿è®¡ç®—åœ¨t = 1å¤„EMçš„è§£ï¼ˆè¦ç”»å‡ºError-Dtçš„å›¾åƒï¼Œæ‰€ä»¥éœ€è¦é€‰å–ä¸åŒçš„æ­¥é•¿è®¡ç®—ï¼‰
 %         Xtemp = X0;
 %         for j = 1:L
 %             Winner = sum(dW(R*(j-1)+1:R*j));
